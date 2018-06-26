@@ -4,9 +4,12 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
+//Page
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
+//Plugins
+import { Push } from '@ionic-native/push';
 @NgModule({
   declarations: [
     MyApp,
@@ -14,7 +17,7 @@ import { HomePage } from '../pages/home/home';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -24,6 +27,7 @@ import { HomePage } from '../pages/home/home';
   providers: [
     StatusBar,
     SplashScreen,
+    Push,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

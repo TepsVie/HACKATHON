@@ -1,3 +1,4 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -7,13 +8,20 @@ import { StatusBar } from '@ionic-native/status-bar';
 //Page
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { TraiteurPage } from './../pages/traiteur/traiteur';
+import { TraiteurMealsPage } from './../pages/traiteur-meals/traiteur-meals';
+import { InformationPage } from './../pages/information/information';
+
 
 //Plugins
 import { Push } from '@ionic-native/push';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    TraiteurPage,
+    TraiteurMealsPage,
+    InformationPage,
   ],
   imports: [
     BrowserModule,
@@ -22,13 +30,16 @@ import { Push } from '@ionic-native/push';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    TraiteurPage,
+    TraiteurMealsPage,
+    InformationPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Push,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule {}
+export class AppModule { }

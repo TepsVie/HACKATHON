@@ -1,12 +1,7 @@
+import { TraiteurMealsPage } from './../traiteur-meals/traiteur-meals';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the TraiteurPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @Component({
   selector: 'page-traiteur',
@@ -17,8 +12,7 @@ export class TraiteurPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TraiteurPage');
+  pushMeals() {
+    this.navCtrl.push(TraiteurMealsPage)
   }
-
 }

@@ -7,12 +7,37 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>TraiteurMeals</ion-title>
+    <ion-title>Listes des Ma'a</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+  <div>
+    <button ion-button round clear (click)='showPrompt()' class='createButton'>Ajouter un plat</button>
+  </div>
+
+  <ion-list>
+    <ion-item item-start>
+      <ion-thumbnail item-start>
+        <!-- <img src=""/> -->
+      </ion-thumbnail>
+      <ion-label>
+        <h2>Nom du ma'a</h2>
+        <p>Détails</p>
+      </ion-label>
+      <!--       <ion-checkbox item-end color="dark" (ionChange)="getValue()"> </ion-checkbox> -->
+
+      <button ion-button item-end small clear (click)='check()'>{{txt}}</button>
+
+    </ion-item>
+
+  </ion-list>
+
+  <div>
+    <button ion-button round clear class='homeButton'>Valider</button>
+  </div>
 
 </ion-content>

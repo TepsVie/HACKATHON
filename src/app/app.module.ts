@@ -11,6 +11,7 @@ import { HomePage } from '../pages/home/home';
 import { TraiteurPage } from './../pages/traiteur/traiteur';
 import { TraiteurMealsPage } from './../pages/traiteur-meals/traiteur-meals';
 import { InformationPage } from './../pages/information/information';
+import { HttpModule } from '@angular/http';
 
 
 //Plugins
@@ -26,6 +27,7 @@ import { Push } from '@ionic-native/push';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

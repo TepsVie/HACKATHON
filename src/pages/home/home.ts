@@ -29,29 +29,21 @@ export class HomePage {
 
   }
 
-  /* pushTraiteur() {
-    this.navCtrl.push(TraiteurPage);
-    this.auth();
-  } */
-
   pushInfo() {
     this.navCtrl.push(InformationPage)
   }
 
   auth() {
     const url = `${this.baseUrl}`;
-
-
     return this.http.post(url, { 'email': this.login, 'password': this.mdp })
       .map(res => res.json())
       .subscribe(
         (data) => {
           console.log('Information du traiteur: ', data);
-          this.traiteurInfo = data.success.id
-          this.traiteurInfo -= 1;
+          this.traiteurInfo = data.success.userstype_id;
           this.token = data.success.token;
-          this.getDevInfo();
-          console.log('Identifiant "Rangée": ', this.traiteurInfo);
+          this.pushCondition();
+          console.log('Identifiant "UserType": ', this.traiteurInfo);
           console.log('Token: ', this.token);
           return this.traiteurInfo
         },
@@ -60,22 +52,9 @@ export class HomePage {
         })
   }
 
-  getDevInfo() {
-    const url = `http://groupe3.api/api/users`;
-
-    return this.http.get(url)
-      .map(res => res.json())
-      .subscribe((data) => {
-        this.usertype = data.data[this.traiteurInfo].userstype;
-        console.log('Type: ', this.usertype);
-        this.pushCondition();
-      });
-
-  }
-
   pushCondition() {
-    if (this.usertype == 'Traiteur') this.navCtrl.push(TraiteurPage, { tokenValue: this.token.toString() })
-    else if (this.usertype == 'Collaborateur') this.navCtrl.push(InformationPage)
+    if (this.traiteurInfo == 1 ) this.navCtrl.push(TraiteurPage, { tokenValue: this.token.toString() })
+    else if (this.traiteurInfo == 2 ) this.navCtrl.push(InformationPage)
   }
 
   presentAlert() {

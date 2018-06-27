@@ -18,8 +18,10 @@
   <ion-list>
     <ion-item>
       <h2>Mardi</h2>
-      <p>Nom des plats</p>
-      <button ion-button clear item-end (click)="pushMeals('mardi')">
+      <div *ngFor='let menu of menuInfos'>
+        <p>Nom des plats</p>
+      </div>
+      <button ion-button clear item-end (click)="pushMeals('2018-06-26')">
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-item>

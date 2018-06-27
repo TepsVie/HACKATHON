@@ -30,23 +30,22 @@
         <ion-label>
           {{meal.name}}
         </ion-label>
-        <!--       <ion-checkbox item-end color="dark" (ionChange)="getValue()"> </ion-checkbox> -->
 
-        <button ion-button item-end small clear (click)='addButton(i)'>{{meal.action}}</button>
+        <button ion-button item-end small clear (click)='addButton(i, meal.id)'>{{meal.action}}</button>
 
       </ion-item>
       <ion-item-options>
-        <button ion-button color="danger" (click)='deleteMenu(meal.id)'>
+        <button ion-button color="primary">
+          <ion-icon name="refresh"></ion-icon>
+          Mettre à jour
+        </button>
+        <button ion-button color="danger" (click)='deleteMeal(meal.id)'>
           <ion-icon name="trash"></ion-icon>
-          Delete
+          Supprimer
         </button>
       </ion-item-options>
 
     </ion-item-sliding>
   </ion-list>
-
-  <div>
-    <button ion-button round clear class='homeButton'></button>
-  </div>
 
 </ion-content>

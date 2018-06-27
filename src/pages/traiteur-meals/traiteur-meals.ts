@@ -20,7 +20,9 @@ export class TraiteurMealsPage {
 
   token: any;
   idMeal: any;
+  idMenu: any;
   mealsGet: any;
+  date: any;
 
   mealsInfo: MealGlobal = new MealGlobal;
   constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController, public alertCtrl: AlertController, public http: Http) {
@@ -29,17 +31,19 @@ export class TraiteurMealsPage {
 
   ionViewWillEnter() {
     this.token = this.navParams.get('tokenValue');
+    this.date = this.navParams.get('date');
     this.getMealsLaunch();
   }
 
-  addButton(i) {
-    this.mealsInfo.data[i].action = (this.mealsInfo.data[i].action == 'Ajouter')?'Retirer':'Ajouter';
-    /* if (this.mealsInfo.data[i].action == 'Ajouter') {
-      this.txt = 'Retirer';
-    } else if (this.txt = 'Ajouter') {
-      console.log('go to next page');
-      this.txt == 'Retirer'
-    } */
+  addButton(i, arg) {
+    this.mealsInfo.data[i].action = (this.mealsInfo.data[i].action == 'Ajouter') ? 'Retirer' : 'Ajouter';
+    this.idMeal = arg;
+
+
+    if (this.mealsInfo.data[i].action == 'Retirer') {
+      this.addMenu();
+    } else
+      this.deleteMenu();
   }
 
   getValue(arg) {
@@ -75,7 +79,7 @@ export class TraiteurMealsPage {
         {
           text: 'Retour',
           handler: data => {
-            console.log('Retour clicked');
+            console.log(this.date);
           }
         },
         {
@@ -111,9 +115,9 @@ export class TraiteurMealsPage {
 
   getMealsLaunch() {
     this.getMealsInfo()
-      .then(skillsFetched => {
-        for (let i = 0; i < skillsFetched.data.length; i++) skillsFetched.data[i].action = 'Ajouter';
-        this.mealsInfo = skillsFetched;
+      .then(mealsFetched => {
+        for (let i = 0; i < mealsFetched.data.length; i++) mealsFetched.data[i].action = 'Ajouter';
+        this.mealsInfo = mealsFetched;
 
         console.log(this.mealsInfo.data);
       })
@@ -144,25 +148,66 @@ export class TraiteurMealsPage {
       .subscribe((data) => {
         this.getMealsLaunch();
         this.mealsTable.push(data);
-        console.log('Plats: ', this.mealsTable);
+        console.log('Photo ajouté');
         return this.mealsTable
       })
   }
 
-  deleteMenu(arg) {
-    const url = 'http://groupe3.api/api/meal/'+arg;
+  deleteMeal(arg) {
+    const url = 'http://groupe3.api/api/meal/' + arg;
     let headers = new Headers();
     let tokenHeader = 'Bearer ' + this.token;
     headers.append("Accept", "application/json");
     headers.append("Authorization", tokenHeader);
 
     this.http.delete(url, { headers: headers })
-    .subscribe(
-      resp => { 
-        console.log('Deleted Id: ', arg);
-        this.getMealsLaunch() },
-      error => console.log('error occur, delete fail')
-    )
-    
+      .subscribe(
+        resp => {
+          console.log('Deleted Id: ', arg);
+          console.log('Meal supprimé');
+          this.getMealsLaunch()
+        },
+        error => console.log('error occur, delete fail')
+      )
   }
+
+  addMenu() {
+    const url = 'http://groupe3.api/api/menu/create';
+    let headers = new Headers();
+    console.log(this.date)
+    let tokenHeader = 'Bearer ' + this.token;
+    headers.append("Accept", "application/json");
+    headers.append("Authorization", tokenHeader);
+    this.mealsTable = [];
+    return this.http.post(url, { 'meal_id': this.idMeal, 'date': this.date }, { headers: headers })
+      .map(res => res.json())
+      .subscribe((data) => {
+        this.mealsTable.push(data);
+        this.idMenu = data.id;
+        console.log('Plats: ', this.mealsTable);
+        console.log('Menu crée');
+        return this.mealsTable
+      })
+  }
+
+
+  deleteMenu() {
+    const url = 'http://groupe3.api/api/menu/' + this.idMenu;
+    let headers = new Headers();
+    console.log('Id du Menu: ',this.idMenu)
+    let tokenHeader = 'Bearer ' + this.token;
+    headers.append("Accept", "application/json");
+    headers.append("Authorization", tokenHeader);
+    this.mealsTable = [];
+    return this.http.delete(url, { headers: headers })
+      .map(res => res.json())
+      .subscribe((data) => {
+        this.mealsTable.push(data);
+        console.log('Menu: ', this.mealsTable);
+        console.log('Menu supprimé')
+        return this.mealsTable
+      })
+  }
+
+
 }

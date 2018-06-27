@@ -14,7 +14,7 @@ export class HomePage {
   value: string;
   idDev = [];
 
-  traitorInfo: any;
+  traiteurInfo: any;
 
   private baseUrl: string = 'http://groupe3.api/api/login';
 
@@ -24,6 +24,7 @@ export class HomePage {
   devInfos: UsersGlobal = new UsersGlobal;
 
   token: any;
+
   constructor(public navCtrl: NavController, private http: Http, private alertCtrl: AlertController) {
 
   }
@@ -40,19 +41,19 @@ export class HomePage {
   auth() {
     const url = `${this.baseUrl}`;
 
-    let token: any;
+
     return this.http.post(url, { 'email': this.login, 'password': this.mdp })
       .map(res => res.json())
       .subscribe(
         (data) => {
           console.log('Information du traiteur: ', data);
-          this.traitorInfo = data.success.id
-          this.traitorInfo -= 1;
-          token = data.success.token;
+          this.traiteurInfo = data.success.id
+          this.traiteurInfo -= 1;
+          this.token = data.success.token;
           this.getDevInfo();
-          console.log('Identifiant "Rangée": ', this.traitorInfo);
-          console.log('Token: ', token);
-          return this.traitorInfo
+          console.log('Identifiant "Rangée": ', this.traiteurInfo);
+          console.log('Token: ', this.token);
+          return this.traiteurInfo
         },
         (err) => {
           this.presentAlert();
@@ -65,7 +66,7 @@ export class HomePage {
     return this.http.get(url)
       .map(res => res.json())
       .subscribe((data) => {
-        this.usertype = data.data[this.traitorInfo].userstype;
+        this.usertype = data.data[this.traiteurInfo].userstype;
         console.log('Type: ', this.usertype);
         this.pushCondition();
       });
@@ -73,16 +74,15 @@ export class HomePage {
   }
 
   pushCondition() {
-    if (this.usertype == 'Traiteur') this.navCtrl.push(TraiteurPage, { token })
+    if (this.usertype == 'Traiteur') this.navCtrl.push(TraiteurPage, { tokenValue: this.token.toString() })
     else if (this.usertype == 'Collaborateur') this.navCtrl.push(InformationPage)
-    else (this.presentAlert())
   }
 
   presentAlert() {
     let alert = this.alertCtrl.create({
       title: 'Email ou mot de passe',
       subTitle: 'incorrect',
-      buttons: ['Oks']
+      buttons: ['Ok']
     });
     alert.present();
   }

@@ -9,10 +9,15 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class TraiteurPage {
 
+  token: any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
+  ionViewWillEnter() {
+    this.token = this.navParams.get('tokenValue');
+  }
   pushMeals() {
-    this.navCtrl.push(TraiteurMealsPage)
+    this.navCtrl.push(TraiteurMealsPage, { tokenValue: this.token.toString() })
   }
 }

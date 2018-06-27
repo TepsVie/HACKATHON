@@ -20,24 +20,33 @@
   </div>
 
   <ion-list>
-    <ion-item item-start>
-      <ion-thumbnail item-start>
-        <!-- <img src=""/> -->
-      </ion-thumbnail>
-      <ion-label>
-        <h2>Nom du ma'a</h2>
-        <p>Détails</p>
-      </ion-label>
-      <!--       <ion-checkbox item-end color="dark" (ionChange)="getValue()"> </ion-checkbox> -->
+    <ion-item-sliding #item *ngFor="let meal of mealsInfo.data; let i = index">
+      <ion-item item-start>
+        <ion-thumbnail item-start>
+          <button ion-button clear>
+            <img src="" />
+          </button>
+        </ion-thumbnail>
+        <ion-label>
+          {{meal.name}}
+        </ion-label>
+        <!--       <ion-checkbox item-end color="dark" (ionChange)="getValue()"> </ion-checkbox> -->
 
-      <button ion-button item-end small clear (click)='check()'>{{txt}}</button>
+        <button ion-button item-end small clear (click)='addButton(i)'>{{meal.action}}</button>
 
-    </ion-item>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="danger" (click)='deleteMenu(meal.id)'>
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
 
+    </ion-item-sliding>
   </ion-list>
 
   <div>
-    <button ion-button round clear class='homeButton'>Valider</button>
+    <button ion-button round clear class='homeButton'></button>
   </div>
 
 </ion-content>
